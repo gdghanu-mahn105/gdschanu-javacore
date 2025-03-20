@@ -1,5 +1,5 @@
 // encapsulation: để che giấu dữ liệu, tạo lớp readonly and writeonly bằng cách viết setter và getter
-// tăng tính kiểm soát dữ liệu, đặt điều kiện logic bên trong setter
+// tăng tính kiểm soát dữ liệu, đặt điều kiện logic bên trong setter.
 
 
 public class Encap {

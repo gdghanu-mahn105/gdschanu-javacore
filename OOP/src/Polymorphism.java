@@ -8,7 +8,7 @@ public class Polymorphism {
     protected String doAn;
 
     public void anHat() {
-        System.out.println("dang an hat");
+        System.out.println("dang an hatt");
     }
 
     public void anHat(String anHat) {

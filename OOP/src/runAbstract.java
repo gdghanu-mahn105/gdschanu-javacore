@@ -3,6 +3,7 @@ public class runAbstract {
         Abstract1 conmeo = new Abstract2();
         conmeo.tiengKeu();
         conmeo.keumacdinh();
+        conmeo.keumacdinh();
 
     }
 

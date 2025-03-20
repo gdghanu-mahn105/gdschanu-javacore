@@ -9,6 +9,6 @@ public abstract class Abstract1 {
     public abstract void tiengKeu();
 
     public void keumacdinh() {
-        System.out.println("mèo méo meo mèo meo, con mèo ngu ngốc đáng yêuu bbalbla");
+        System.out.println("mèo méo meo mèo meo, con mèo ngu ngốc đáng yêuu balbla");
     }
 }
