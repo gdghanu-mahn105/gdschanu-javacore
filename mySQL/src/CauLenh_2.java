@@ -75,10 +75,84 @@ public class CauLenh_2 {
       HAVING COUNT(Orders.OrderID)<10;
         =>> we can not use WHERE with aggregate functions because WHERE filters rows before the aggregation orccurs
 
+     EXISTS operator => test for the existance of any record in a subquery, return TRUE of the subquery returns one or more records
+     Syntax:
+         SELECT column_name FROM table_name
+         WHERE EXISTS ( SELECT column_name FROM table_name WHERE CONDITION)
+      SELECT SupplierName
+      FROM Suppliers
+      WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.supplierID=Suppliers.supplierID AND Price <20);
+
+      ANY and ALL
+         ANY => return a boolean value as results, true if any or subquery values meet the condition
+         Syntax:
+         SELECT Column_name(s)
+         FROM Table_name
+         WHERE column_name operator(=, <>, !=, >, >=, <, or <=) ANY/ALL (Subquery)
+         SELECT ProductName
+         FROM Products
+         WHERE ProductID =ANY(SELECT ProductID FROM OrderDetails WHERE Quantity=10);
+
+     ALL => SELECT ALL ProductName FROM Products WHERE TRUE;
+
+     SELECT INTO => Copy data from one table into a new table
+     Syntax: SELECT Column1,Column...
+             INTO newtable [IN externalDB]
+             FROM oldtable WHERE condition;
+
+      INSERT INTO => copy data from one table and inserts it into another table
+      Syntax:
+      INSERT INTO table2 (column1,column2...)
+      SELECT col1, col2, col3....
+      FROM Table1 WHERE condition;
+
+      CASE expression => goes through conditions and returns a value when the first condition is met.
+      when condition is TRUE, it will stop reading and return result
+      if no condition are TRUE, it returns the value in the ELSE clause
+      Syntax:
+      CASE
+        WHEN condition1 THEN result1
+        WHEN condition2 THEN result2
+        WHEN condition3 THEN result3
+        WHEN condition4 THEN result4
+        ELSE result
+      END;
+      SELECT Quantity, ProductID, CASE
+        WHEN Quantity >20 THEN'The quantity is over 20'
+        WHEN Quantity <20 THEN 'The quantity is less than 20'
+        ELSE 'the quantity is 20'
+        END AS CheckSoLuong
+        FROM Orderdetails;
+
+      NUlL Functions
+      IFNULL(), ISNULL(), COALESCE(), and NVL()
+      IFNULL and COALESCE are used for MySQL
+      ISNULL,COALSECE -> SQL Server, MS Access
+      NVL,COALESCE -> Oracle
+      use like this: IFNULL(Column,alternative-value), check if value of this column is null, then return alternative value
 
 
+      Stored Procedures
+      syntax:
+      CREATE PROCEDURE procedure_Name
+      AS
+      SQL_statement
+      GO;
+      to execute it
+      EXEC procedure_Name
+
+      we can pass parameter(s), therefore the stored statement can act based on the parameter
+      eg:
+      CREATE PROCEDURE SelectAllCustomers @City nvarchar(30)      You can pass multiple parameters
+      AS
+      SELECT * FROM Customers WHERE City=@City
+      GO;
+
+      EXEC SelectAllCustomers @City='London'
 
 
-
+     Comment in SQL use '--' to single line
+                   multiple-line like /*     * /
      */
+
 }
