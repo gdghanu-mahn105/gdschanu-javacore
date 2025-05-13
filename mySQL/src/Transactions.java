@@ -17,7 +17,24 @@ public class Transactions {
         SAVEPOINT; // điểm lưu trữ, có thể quay lại khi cần thiết
         ROLLBACK TO SAVEPOINT; // quay lại một điểm trong transaction mà không huỷ bỏ toàn bộ transaction
     - VÍ DỤ VỀ TRANSACTION
+        BEGIN TRANSACTION;
+        UPDATE employees
+        SET Salary=Salary *1.10
+        WHERE employees.ID=1;
+        INSERT INTO transaction_history (ID, DateChange, PreviousSA, ChangedSA)
+        VALUES (1,CURRENT_DATE,5000,5500);
+        COMMIT;
 
+        BEGIN TRANSACTION;
+        UPDATE employees
+        SET Salary=Salary*1.1
+        WHERE ID=1;
+        SAVEPOINT sp1;
+        UPDATE employees
+        SET Salary=Salary*1.2
+        WHERE ID=2;
+        ROLLBACK TO SAVEPOINNT sp1;
+        COMMIT;
     SÂU HƠN VỀ TRANSACTION
     - transaction là một tập câu lệnh được thực thi tuần tự, nếu có câu lệnh nào bị lỗi thì transaction sẽ dừng lại và ROLLBACK tất cả
         các câu lệnh đã thực thi, về lúc trước khi bắt đầu transaction
@@ -36,7 +53,25 @@ public class Transactions {
                         đang có update lock
     - QUẢN LÍ TRUY CẬP ĐỒNG THỜI
         CÁC TÁC ĐỘNG KHI TRUY CẬP ĐỒNG THỜI
-    - ISOLATION LEVEL
+        +) Lost update: xảy ra khi hai hoặc nhiều transaction cùng thực hiện update giá trị, khi đó dữ liệu bị ghi đè khi update dẫn đến mất dữ liệu
+        +) uncommited dependency (dirty read): xảy ra khi một transaction đọc dữ liệu khi transaction khác đang thực hiện và chưa commit
+        +) Inconsistent analysis (nonrepeatable read): xảy ra khi dọc dữ liệu nhiều lần nhưng kết quả ra khác nhau vì giữa các lần đọc đang bị
+                                                       một transaction khác update
+        +) Phantom read: khi đọc lần đầu thì ra kết quả, sau đó do được thêm hoặc xoá row bởi một transaction khác, nên kết quả khi truy vấn lại sẽ khác ban đầu
 
+        CÁC KIỂU QUẢN LÍ TRUY CẬP ĐỒNG THỜI
+        - PESSIMISTIC concurrency control: khoá lock, tranh chấp dữ liệu cao
+        - OPTIMISTIC concurrency control: transaction khi đọc dữ liệu sẽ không được lock. khi một transaction update dữ liệu
+                                        hệ thống sẽ kiểm tra xem có transaction nào đang cùng thay đổi dữ liệu hay không
+                                        nếu có sẽ đưa ra lỗi và roll back, tranh chấp dữ liệu thấp
+    - ISOLATION LEVEL
+        +) READ UNCOMMITED - mức độ cô lập thấp nhất, có thể truy cập vào các bản ghi đang được update bởi 1 transaction khác => có thể dirty read
+        +) READ COMMITED - chỉ đọc được khi dữ liệu được commit, tuy nhiên chỉ tránh đọc dữ liệu update còn đối với insert và delete thì không => phantom reads
+        +) REPEATABLE READ - không cho transaction ghi dữ liệu vào một transaction đang được đọc bởi 1 transaction khác cho tới khi transaction đó kết thúc
+                                => đảm bảo việc đọc dữ liệu trong 1 transaction là giống nhau, tuy nhiên vẫn không thể ngăn insert và delete
+        +) Serializable - cao nhất - các transaction hoàn toàn tách biệt với nhau, SQL đặt write + read lock trên dữ liệu cho tới khi transaction kết thúc
+        +) Snapshot - dùng khi row versioning được bật - tương đương với serializable - hoạt động bằng cách không khoá dữ liệu mà tạo ra bản sao, việc đọc ghi
+                                dữ liệu trên bản sao khôg ảnh hưởng đến bản chính => giảm blocking, đảm bảo toàn vẹn dữ liệu
+                                Nhược điểm: cần nhiều bộ nhớ để lưu các bản ghi được sao chép
      */
 }
