@@ -31,6 +31,12 @@ public class MyIndex {
         CREATE INDEX index_CusID_OrDate ON Orders(CustomerID, OrderDate);
         tạo ra index của 2 column, thứ tự, đánh index của customerID trươớc sau đó là OrderDate
      - CÁC LOẠI INDEX
+        +) clustered Index: Sắp xếp và lưu trữ dữ liệu bảng theo thứ tự của chỉ mục. Mỗi bảng chỉ có thể có một Clustered Index.
+        +) Non-clustered Index: Lưu trữ các con trỏ đến các vị trí của bản ghi dữ liệu trong bảng, không ảnh hưởng đến
+        thứ tự lưu trữ của bảng. Một bảng có thể có nhiều Non-clustered Index.
+        +) Full-text Index: Dùng cho các tìm kiếm văn bản phức tạp, hỗ trợ tìm kiếm toàn văn.
+        +) Hash Index: Sử dụng hàm băm để tạo chỉ mục, thường dùng trong các hệ thống NoSQL.
+
      - LƯU Ý: index
             +) index sẽ là tốn thêm bộ nhớ để lưu trữ
             +) làm chậm hoạt động insert hay update column sử dụng index, index cần được điều chỉnh
