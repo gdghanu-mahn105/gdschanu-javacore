@@ -58,7 +58,7 @@ public class MyIndex {
       === index được tạo tự động====
       - các khoá chính
       - khoá ngoại
-      - cột UNIQUE
+      - cột UNIQUEE
      */
 
 
